@@ -2,10 +2,15 @@ import React, {useState} from 'react';
 
 const UserForm = () => {
     const [firstName, setFirstName] = useState("");
+    const [firstNameError, setFirstNameError] = useState("");
     const [lastName, setLastName] = useState("");
-    const [passCon, setPassCon] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
     const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [passCon, setPassCon] = useState("");
+    const [passConError, setPassConError] = useState("");
     const [hasBeenSubmitted, setHasBeenSubmitted] = useState(false);
 
     const createUser = (e) => {
@@ -14,6 +19,61 @@ const UserForm = () => {
         console.log("Welcome", newUser);
         setHasBeenSubmitted(true);
     };
+
+    const handFirstName = (e) => {
+        setFirstName(e.target.value);
+        if(e.target.value.length === 0){
+            setFirstNameError("First name is required");
+        }else if(e.target.value.length < 3){
+            setFirstNameError("First name must be at least 3 characters long");
+        }else{
+            setFirstNameError("");
+        }
+    }
+
+    const handLastName = (e) => {
+        setLastName(e.target.value);
+        if(e.target.value.length === 0){
+            setLastNameError("Last name is required");
+        }else if(e.target.value.length < 3){
+            setLastNameError("Last name must be at least 3 characters long");
+        }else{
+            setLastNameError("");
+        }
+    }
+
+    const handEmail = (e) => {
+        setEmail(e.target.value);
+        if(e.target.value.length === 0){
+            setEmailError("Email is required");
+        }else if(e.target.value.length < 3){
+            setEmailError("Email must be valid");
+        }else{
+            setEmailError("");
+        }
+    }
+
+    const handPassword = (e) => {
+        setPassword(e.target.value);
+        if(e.target.value.length === 0){
+            setPasswordError("Password is required");
+        }else if(e.target.value.length < 8){
+            setPasswordError("Password must be at least 8 characters long");
+        }else{
+            setPasswordError("");
+        }
+    }
+
+        const handPassCon = (e) => {
+        setPassCon(e.target.value);
+        if(e.target.value.length === 0){
+            setPassConError("Password confirmation is required");
+        }else if(e.target.value !== password){
+            setPassConError("Password confirmation must match password");
+        }else{
+            setPassConError("");
+        }
+    }
 
     // const formMessage = () => {
     //     if( hasBeenSubmitted ) {
@@ -35,23 +95,48 @@ const UserForm = () => {
                         {/* <h3>{formMessage()}</h3> */}
                     <div className="form-group">
                         <label>First Name: </label>
-                        <input className="form-control" type="text" onChange={ (e) => setFirstName(e.target.value) } />
+                        <input className="form-control" type="text" onChange={ handFirstName} />
+                        {
+                            firstNameError ?
+                            <p className='text-danger'>{ firstNameError }</p>:
+                            ''
+                        }
                     </div>
                     <div className="form-group">
                         <label>Last Name:</label>
-                        <input className="form-control" type="text" onChange={ (e) => setLastName(e.target.value)} />
+                        <input className="form-control" type="text" onChange={ handLastName} />
+                        {
+                            lastNameError ?
+                            <p className='text-danger'>{ lastNameError }</p>:
+                            ''
+                        }
                     </div>
                     <div className="form-group">
                         <label>Email Address: </label>
-                        <input className="form-control" type="text" onChange={ (e) => setEmail(e.target.value) } />
+                        <input className="form-control" type="text" onChange={ handEmail} />
+                        {
+                            emailError ?
+                            <p className='text-danger'>{ emailError }</p>:
+                            ''
+                        }
                     </div>
                     <div className="form-group">
                         <label>Password: </label>
-                        <input className="form-control" type="password" onChange={ (e) => setPassword(e.target.value) } />
+                        <input className="form-control" type="password" onChange={ handPassword} />
+                        {
+                            passwordError ?
+                            <p className='text-danger'>{ passwordError }</p>:
+                            ''
+                        }
                     </div>
                     <div className="form-group">
                         <label>Confirm Password: </label>
-                        <input className="form-control" type="password" onChange={ (e) => setPassCon(e.target.value)} />
+                        <input className="form-control" type="password" onChange={ handPassCon } />
+                        {
+                            passConError ?
+                            <p className='text-danger'>{ passConError }</p>:
+                            ''
+                        }
                     </div>
                     <input className="btn btn-success m-3" type="submit" value="Create User" />
                 </form>
