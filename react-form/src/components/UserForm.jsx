@@ -46,7 +46,7 @@ const UserForm = () => {
         setEmail(e.target.value);
         if(e.target.value.length === 0){
             setEmailError("Email is required");
-        }else if(e.target.value.length < 3){
+        }else if(e.target.value.length < 5){
             setEmailError("Email must be valid");
         }else{
             setEmailError("");
